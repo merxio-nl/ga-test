@@ -2,8 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>GA4 Test Page — New Stream</title>
+  <title>GA4 Probe — G-3BY248C8C</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:system-ui, Arial; max-width:800px; margin:32px auto; line-height:1.5}</style>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BY248C8C"></script>
@@ -11,18 +12,52 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
-    // Базовая конфигурация с debug_mode
-    gtag('config', 'G-3BY248C8C', {
-      debug_mode: true
-    });
+    gtag('config', 'G-3BY248C8C', { debug_mode: true });
   </script>
 </head>
 <body>
-  <h1>Google Analytics Test Page (New Stream)</h1>
-  <p>Если всё работает, то в GA4 → DebugView появится событие <code>page_view</code>.</p>
-  <button onclick="gtag('event','test_click',{event_category:'button',event_label:'test_button'})">
-    Отправить test_click
-  </button>
+  <h1>GA4 Probe</h1>
+  <p>ID потока: <b>G-3BY248C8C</b></p>
+  <ol>
+    <li>Ниже должен появиться <code>client_id</code>. Если он пуст — конфигурация не сработала.</li>
+    <li>Открой DevTools → Network → фильтр <code>collect</code> и обнови страницу. Должны быть запросы 204.</li>
+    <li>Нажми кнопку — отправится событие <code>test_click</code>.</li>
+  </ol>
+
+  <div id="status">Инициализация…</div>
+  <pre id="cid" style="padding:12px;background:#f6f8fa;border:1px solid #ddd"></pre>
+
+  <button onclick="gtag('event','test_click',{event_category:'button',event_label:'probe_click'})">Отправить test_click</button>
+
+  <script>
+    (function() {
+      const status = document.getElementById('status');
+      const cidBox = document.getElementById('cid');
+
+      function show(msg) { status.textContent = msg; console.log(msg); }
+
+      // Проверим, доступна ли функция gtag
+      if (typeof gtag !== 'function') {
+        show('❌ gtag не определён');
+        return;
+      } else {
+        show('✅ gtag определён, пробую получить client_id…');
+      }
+
+      // Попросим client_id у GA
+      try {
+        gtag('get', 'G-3BY248C8C', 'client_id', function(clientId) {
+          cidBox.textContent = 'client_id: ' + clientId;
+          if (clientId) {
+            show('✅ Получен client_id. Конфигурация работает.');
+          } else {
+            show('⚠️ client_id пуст — проверьте блокировщики/куки/consent.');
+          }
+        });
+      } catch (e) {
+        show('❌ Ошибка при получении client_id: ' + e);
+      }
+    })();
+  </script>
 </body>
 </html>
