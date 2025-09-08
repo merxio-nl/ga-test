@@ -2,32 +2,43 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>GA4 Probe — G-3BY248C8C</title>
+  <title>GA4 Probe + Consent — G-3BY248C8C</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>body{font-family:system-ui, Arial; max-width:800px; margin:32px auto; line-height:1.5}</style>
+  <style>body{font-family:system-ui, Arial; max-width:880px; margin:32px auto; line-height:1.55}</style>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BY248C8C"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){dataLayer.push(arguments);}    
+
+    // ЯВНЫЙ CONSENT MODE (EU/GDPR safe): аналитика разрешена, реклама отключена
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      analytics_storage: 'granted',
+      functionality_storage: 'granted',
+      security_storage: 'granted'
+    });
+
+    // Инициализация GA4
     gtag('js', new Date());
     gtag('config', 'G-3BY248C8C', { debug_mode: true });
   </script>
 </head>
 <body>
-  <h1>GA4 Probe</h1>
-  <p>ID потока: <b>G-3BY248C8C</b></p>
+  <h1>GA4 Probe + Consent Mode</h1>
+  <p>Поток: <b>G-3BY248C8C</b> | Режим: analytics_storage=<code>granted</code></p>
   <ol>
-    <li>Ниже должен появиться <code>client_id</code>. Если он пуст — конфигурация не сработала.</li>
-    <li>Открой DevTools → Network → фильтр <code>collect</code> и обнови страницу. Должны быть запросы 204.</li>
-    <li>Нажми кнопку — отправится событие <code>test_click</code>.</li>
+    <li>Открой DevTools → Network → фильтр <code>collect</code>. Должны быть 204.</li>
+    <li>DebugView/Realtime: <i>должны появиться</i> <code>page_view</code> и <code>test_click</code>.</li>
   </ol>
 
   <div id="status">Инициализация…</div>
   <pre id="cid" style="padding:12px;background:#f6f8fa;border:1px solid #ddd"></pre>
 
-  <button onclick="gtag('event','test_click',{event_category:'button',event_label:'probe_click'})">Отправить test_click</button>
+  <button onclick="gtag('event','test_click',{event_category:'button',event_label:'probe_click_consent'})">
+    Отправить test_click
+  </button>
 
   <script>
     (function() {
@@ -36,27 +47,14 @@
 
       function show(msg) { status.textContent = msg; console.log(msg); }
 
-      // Проверим, доступна ли функция gtag
-      if (typeof gtag !== 'function') {
-        show('❌ gtag не определён');
-        return;
-      } else {
-        show('✅ gtag определён, пробую получить client_id…');
-      }
+      if (typeof gtag !== 'function') { show('❌ gtag не определён'); return; }
+      show('✅ gtag определён, пробую получить client_id…');
 
-      // Попросим client_id у GA
-      try {
-        gtag('get', 'G-3BY248C8C', 'client_id', function(clientId) {
-          cidBox.textContent = 'client_id: ' + clientId;
-          if (clientId) {
-            show('✅ Получен client_id. Конфигурация работает.');
-          } else {
-            show('⚠️ client_id пуст — проверьте блокировщики/куки/consent.');
-          }
-        });
-      } catch (e) {
-        show('❌ Ошибка при получении client_id: ' + e);
-      }
+      gtag('get', 'G-3BY248C8C', 'client_id', function(clientId) {
+        cidBox.textContent = 'client_id: ' + clientId;
+        if (clientId) show('✅ Получен client_id. Конфигурация работает.');
+        else show('⚠️ client_id пуст — проверьте блокировщики/куки/consent.');
+      });
     })();
   </script>
 </body>
