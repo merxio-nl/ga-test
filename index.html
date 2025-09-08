@@ -2,17 +2,16 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>GA4 Probe + Consent — G-3BY248C8C</title>
+  <title>GA4 Test Page — G-3J8Y24E8C8</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>body{font-family:system-ui, Arial; max-width:880px; margin:32px auto; line-height:1.55}</style>
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BY248C8C"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3J8Y24E8C8"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}    
 
-    // ЯВНЫЙ CONSENT MODE (EU/GDPR safe): аналитика разрешена, реклама отключена
+    // Consent Mode для Европы (GDPR)
     gtag('consent', 'default', {
       ad_storage: 'denied',
       analytics_storage: 'granted',
@@ -22,40 +21,16 @@
 
     // Инициализация GA4
     gtag('js', new Date());
-    gtag('config', 'G-3BY248C8C', { debug_mode: true });
+    gtag('config', 'G-3J8Y24E8C8', { debug_mode: true });
   </script>
 </head>
 <body>
-  <h1>GA4 Probe + Consent Mode</h1>
-  <p>Поток: <b>G-3BY248C8C</b> | Режим: analytics_storage=<code>granted</code></p>
-  <ol>
-    <li>Открой DevTools → Network → фильтр <code>collect</code>. Должны быть 204.</li>
-    <li>DebugView/Realtime: <i>должны появиться</i> <code>page_view</code> и <code>test_click</code>.</li>
-  </ol>
+  <h1>GA4 Test Page (New ID)</h1>
+  <p>Поток: <b>G-3J8Y24E8C8</b> | Consent Mode включен (analytics_storage=granted)</p>
+  <p>Если всё работает, то в GA4 → DebugView появится <code>page_view</code>.</p>
 
-  <div id="status">Инициализация…</div>
-  <pre id="cid" style="padding:12px;background:#f6f8fa;border:1px solid #ddd"></pre>
-
-  <button onclick="gtag('event','test_click',{event_category:'button',event_label:'probe_click_consent'})">
+  <button onclick="gtag('event','test_click',{event_category:'button',event_label:'test_button_new'})">
     Отправить test_click
   </button>
-
-  <script>
-    (function() {
-      const status = document.getElementById('status');
-      const cidBox = document.getElementById('cid');
-
-      function show(msg) { status.textContent = msg; console.log(msg); }
-
-      if (typeof gtag !== 'function') { show('❌ gtag не определён'); return; }
-      show('✅ gtag определён, пробую получить client_id…');
-
-      gtag('get', 'G-3BY248C8C', 'client_id', function(clientId) {
-        cidBox.textContent = 'client_id: ' + clientId;
-        if (clientId) show('✅ Получен client_id. Конфигурация работает.');
-        else show('⚠️ client_id пуст — проверьте блокировщики/куки/consent.');
-      });
-    })();
-  </script>
 </body>
 </html>
