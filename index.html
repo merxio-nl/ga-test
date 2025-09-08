@@ -2,20 +2,27 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GA Test Page</title>
+  <title>GA4 Test Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-266XDBZ1JT"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KR95VN2HJH"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-266XDBZ1JT', { 'debug_mode': true });
+
+    // Базовая конфигурация
+    gtag('config', 'G-KR95VN2HJH', {
+      debug_mode: true
+    });
   </script>
 </head>
 <body>
-  <h1>Тест Google Analytics</h1>
-  <p>Если вы видите эту страницу, значит всё работает.</p>
+  <h1>Google Analytics Test Page</h1>
+  <p>Если всё работает, то в GA4 → DebugView появится событие <code>page_view</code>.</p>
+  <button onclick="gtag('event','test_click',{event_category:'button',event_label:'test_button'})">
+    Отправить test_click
+  </button>
 </body>
 </html>
